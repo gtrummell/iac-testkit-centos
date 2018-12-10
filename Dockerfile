@@ -1,6 +1,6 @@
-# Infrastructure-as-Code TestKit for Ubuntu
+# Infrastructure-as-Code TestKit for Centos
 #
-# VERSION: 7
+# VERSION 7
 
 FROM centos:7
 
