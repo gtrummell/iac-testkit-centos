@@ -43,7 +43,7 @@ RUN yum erase -y -q docker \
         wget \
         yum-utils &&\
     yum upgrade -y -q &&\
-    yum clean -y -q &&\
+    yum clean all -y -q &&\
     ln -fs /usr/share/zoneinfo/Etc/UTC /etc/localtime &&\
     ln -fs /usr/share/zoneinfo/Etc/UTC /etc/timezone &&\
     pip install --upgrade -qqq -r requirements.txt &&\
