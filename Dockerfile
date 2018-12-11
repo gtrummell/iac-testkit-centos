@@ -37,8 +37,6 @@ RUN yum erase -y -q docker \
         lvm2 \
         openssl-devel \
         python-devel \
-        python-pip \
-        python36-pip \
         unzip \
         wget \
         yum-utils &&\
@@ -46,6 +44,7 @@ RUN yum erase -y -q docker \
     yum clean all -y -q &&\
     ln -fs /usr/share/zoneinfo/Etc/UTC /etc/localtime &&\
     ln -fs /usr/share/zoneinfo/Etc/UTC /etc/timezone &&\
+    easy_install -q --upgrade pip &&\
     pip install --upgrade -qqq -r requirements.txt &&\
     wget -q -O terraform.zip https://releases.hashicorp.com/terraform/0.11.10/terraform_0.11.10_linux_amd64.zip &&\
     unzip -o -qq terraform.zip -d /usr/bin/ &&\
