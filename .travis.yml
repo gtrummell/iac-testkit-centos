@@ -5,6 +5,7 @@ services:
 
 before_install:
   - docker pull hadolint/hadolint
+  - docker pull centos:7
 
 stages:
   - test
