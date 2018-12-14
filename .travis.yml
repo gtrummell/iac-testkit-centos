@@ -1,4 +1,4 @@
-language: python
+language: minimal
 
 services:
   - docker
@@ -6,5 +6,14 @@ services:
 before_install:
   - docker pull hadolint/hadolint
 
-script:
-  - make build-image
+stages:
+  - test
+  - deploy
+
+jobs:
+  include:
+    - stage: test
+      script: make ci
+    - stage: deploy
+      script: make push-image
+      if: branch = master

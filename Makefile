@@ -9,7 +9,7 @@ help:
 	@echo "Make targets for IAC Test Kit:"
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
-build-image: clean test-dockerfile ## Build the IAC Test Kit from Dockerfile
+build-image: ## Build the IAC Test Kit from Dockerfile
 	@docker build . -t gtrummell/iac-testkit-centos:$(version) -t gtrummell/iac-testkit-centos:latest
 
 clean: ## Sanitize the workspace
@@ -20,10 +20,11 @@ getdeps: ## Retrieve dependencies
 	@docker pull centos:$(version)
 
 push-image: ## Push the IAC Test Kit to Dockerhub
+	@docker login -u ${DOCKER_LOGIN} -p ${DOCKER_PASSWORD}
 	@docker push gtrummell/iac-testkit-centos:latest
 	@docker push gtrummell/iac-testkit-centos:$(version)
 
-test-dockerfile: getdeps ## Test the IAC Test Kit Dockerfile
+test-dockerfile: ## Test the IAC Test Kit Dockerfile
 	@docker run -i --rm hadolint/hadolint < Dockerfile
 
-ci: build-image ## Run all tests and build an image without pushing it to Dockerhub
+ci: clean get-deps test-dockerfile build-image ## Run all tests and build an image without pushing it to Dockerhub
