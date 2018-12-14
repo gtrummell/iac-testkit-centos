@@ -37,7 +37,7 @@ cd: ## Build and push an image in a single sub-shell
 	ifndef DOCKERHUB_PASS
 		$(error DOCKERHUB_PASS is not set)
 	endif
-	@docker build . -t gtrummell/iac-testkit-centos:$(version) -t gtrummell/iac-testkit-centos:latest && \
-	docker login -u ${DOCKERHUB_USER} -p ${DOCKERHUB_PASS} && \
-	docker push gtrummell/iac-testkit-centos:latest && \
+	@docker build -t gtrummell/iac-testkit-centos:$(version) -t gtrummell/iac-testkit-centos:latest . ; \
+	echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USER" --password-stdin ; \
+	docker push gtrummell/iac-testkit-centos:latest ; \
 	docker push gtrummell/iac-testkit-centos:$(version)
