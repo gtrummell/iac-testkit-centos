@@ -20,9 +20,9 @@ get-deps: ## Retrieve dependencies
 	@docker pull centos:$(version)
 
 push-image: ## Push the IAC Test Kit to Dockerhub
-	@docker login -u ${DOCKER_LOGIN} -p ${DOCKER_PASSWORD}
-	@docker push gtrummell/iac-testkit-centos:latest
-	@docker push gtrummell/iac-testkit-centos:$(version)
+	@docker login -u ${DOCKER_LOGIN} -p ${DOCKER_PASSWORD} && \
+	docker push gtrummell/iac-testkit-centos:latest && \
+	docker push gtrummell/iac-testkit-centos:$(version)
 
 test-dockerfile: ## Test the IAC Test Kit Dockerfile
 	@docker run -i --rm hadolint/hadolint < Dockerfile
