@@ -20,7 +20,7 @@ get-deps: ## Retrieve dependencies
 	@docker pull centos:$(version)
 
 push-image: ## Push the IAC Test Kit to Dockerhub
-	@docker login -u ${DOCKER_LOGIN} -p ${DOCKER_PASSWORD} && \
+	@docker login -u ${DOCKERHUB_USER} -p ${DOCKERHUB_PASS} && \
 	docker push gtrummell/iac-testkit-centos:latest && \
 	docker push gtrummell/iac-testkit-centos:$(version)
 
