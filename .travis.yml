@@ -7,14 +7,4 @@ before_install:
   - docker pull hadolint/hadolint
   - docker pull centos:7
 
-stages:
-  - test
-  - deploy
-
-jobs:
-  include:
-    - stage: test
-      script: make ci
-    - stage: deploy
-      script: make push-image
-      if: branch = master
+script: make ci

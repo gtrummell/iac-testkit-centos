@@ -20,7 +20,6 @@ get-deps: ## Retrieve dependencies
 	@docker pull centos:$(version)
 
 push-image: ## Push the IAC Test Kit to Dockerhub
-	@docker login -u ${DOCKERHUB_USER} -p ${DOCKERHUB_PASS} && \
 	docker push gtrummell/iac-testkit-centos:latest && \
 	docker push gtrummell/iac-testkit-centos:$(version)
 
@@ -29,15 +28,4 @@ test-dockerfile: ## Test the IAC Test Kit Dockerfile
 
 ci: clean get-deps test-dockerfile build-image ## Run all tests and build an image without pushing it to Dockerhub
 
-cd: ## Build and push an image in a single sub-shell
-	ifndef DOCKERHUB_USER
-		$(error DOCKERHUB_USER is not set)
-	endif
-
-	ifndef DOCKERHUB_PASS
-		$(error DOCKERHUB_PASS is not set)
-	endif
-	@docker build -t gtrummell/iac-testkit-centos:$(version) -t gtrummell/iac-testkit-centos:latest . ; \
-	echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USER" --password-stdin ; \
-	docker push gtrummell/iac-testkit-centos:latest ; \
-	docker push gtrummell/iac-testkit-centos:$(version)
+cd: ci push-image ## Push the IAC Test Kit to Dockerhub (alias of push-image)
